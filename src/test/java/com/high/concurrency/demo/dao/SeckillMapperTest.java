@@ -13,12 +13,12 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 /**
  * 配置spring和junit整合，junit启动时加载spring IOC容器
  * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:spring-dao.xml")//spring配置文件
-@ActiveProfiles("dev")
 public class SeckillMapperTest {
 
     @Resource
@@ -38,6 +38,10 @@ public class SeckillMapperTest {
     }
 
     /* 根据偏移量查询list*/
+    /**
+     * java没有保存形参的记录
+     *  queryAll(int offset, int limit)--> queryAll(arg0, arg1)
+     * */
     void queryAll(int offset, int limit){
 
     }
