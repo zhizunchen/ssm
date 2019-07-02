@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_HOME" value="/letv/Logs/lef-p2p-web"/>
+    <!--<property name="LOG_HOME" value="/Users/lsjr3/Logs/lef-p2p-web"/>-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] [%X{traceId}] [%X{remoteAddr}] [%thread] \(%c:%L\) %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <!-- 按照每天生成日志文件 -->
+<!--    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/ssm.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            &lt;!&ndash; 活动文件的名字会根据fileNamePattern的值，每隔一段时间改变一次 &ndash;&gt;
+            <fileNamePattern>${LOG_HOME}/ssm.%d.%i.log</fileNamePattern>
+            &lt;!&ndash;日志文件保留天数&ndash;&gt;
+            <MaxHistory>30</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                &lt;!&ndash; maxFileSize:这是活动文件的大小，默认值是10MB &ndash;&gt;
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            &lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符&ndash;&gt;
+            &lt;!&ndash;<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>&ndash;&gt;
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] [%X{traceId}] [%X{remoteAddr}] [%thread] \(%c:%L\) %msg%n</Pattern>
+            <charset>UTF-8</charset> &lt;!&ndash; 此处设置字符集 &ndash;&gt;
+        </encoder>
+    </appender>-->
+    <root level="INFO">
+        <!--<appender-ref ref="CONSOLE"></appender-ref>-->
+        <appender-ref ref="FILE"></appender-ref>
+    </root>
+</configuration>
