@@ -19,4 +19,8 @@ public class SeckillException extends RuntimeException {
         super(message, cause);
         this.code=code;
     }
+
+    public int getCode() {
+        return code;
+    }
 }

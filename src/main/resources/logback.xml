@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_HOME" value="/letv/Logs/lef-p2p-web"/>
+    <property name="LOG_HOME" value="/letv/Logs/ssm"/>
     <!--<property name="LOG_HOME" value="/Users/lsjr3/Logs/lef-p2p-web"/>-->
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

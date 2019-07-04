@@ -1,5 +1,6 @@
 package com.high.concurrency.demo.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 public class Seckill {

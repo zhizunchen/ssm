@@ -14,6 +14,25 @@
          metadata-complete="true">
 <!-- 修改servlet版本为3.1-->
 
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 配置spring需要加载的配置文件
+              spring-dao.xml spring-web.xml spring-service.xml
+              mybatis-spring-spring mvc -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-*.xml</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <!--默认匹配所有请求 -->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
 
 

@@ -3,6 +3,7 @@ package com.high.concurrency.demo.service.impl;
 import com.high.concurrency.demo.constants.ExceptionEnum;
 import com.high.concurrency.demo.dao.SeckillMapper;
 import com.high.concurrency.demo.dao.SuccessSeckillMapper;
+import com.high.concurrency.demo.dao.cache.RedisDao;
 import com.high.concurrency.demo.domain.Seckill;
 import com.high.concurrency.demo.domain.SuccessSeckill;
 import com.high.concurrency.demo.dto.Export;
@@ -35,6 +36,9 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private SuccessSeckillMapper successSeckillMapper;
 
+    @Autowired
+    private RedisDao redisDao;
+
     private String slat = "1qazxdftyuijkl`.[[s";
 
     @Override
@@ -49,10 +53,16 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public Export exportSeckillUrl(Long seckillId) {
-        Seckill seckill = seckillMapper.queryById(seckillId);
+        Seckill seckill = redisDao.getObj(seckillId);
         if(null == seckill){
-            return new Export(false, seckillId);
+            seckill = seckillMapper.queryById(seckillId);
+            if(null == seckill){
+                return new Export(false, seckillId);
+            }else{
+                redisDao.setObj(seckill);
+            }
         }
+
         Date startTime = seckill.getStartTime();
         Date endTime = seckill.getEndTime();
         Date nowTime = new Date();
@@ -77,14 +87,15 @@ public class SeckillServiceImpl implements SeckillService {
         if(null == md5 || !md5.equals(getMd5(seckillId))){
             throw new SeckillException(ExceptionEnum.ACCOUNT_NOT_EXIT.getCode(), ExceptionEnum.ACCOUNT_NOT_EXIT.getDesc());
         }
-        //减库存
-        int index = seckillMapper.reduceNumber(seckillId, new Date());
-        if(0 == index){
+        //调整明细表和库存表的操作顺序 减少行级锁时间  减少网络延迟和GC 可通过存储过程
+        //明细
+        int insertCount = successSeckillMapper.insertSuccessKill(seckillId, userPhone);
+        if(0 == insertCount){
             throw new SeckillException(ExceptionEnum.SECKILL_FAILED.getCode(), ExceptionEnum.SECKILL_FAILED.getDesc());
         }else{
-            //明细
-            int insertCount = successSeckillMapper.insertSuccessKill(seckillId, userPhone);
-            if(0 == insertCount){
+            //减库存
+            int index = seckillMapper.reduceNumber(seckillId, new Date());
+            if(0 == index){
                 throw new SeckillException(ExceptionEnum.SECKILL_FAILED.getCode(), ExceptionEnum.SECKILL_FAILED.getDesc());
             }else{
                 SuccessSeckill seckill = successSeckillMapper.queryByIdWithSeckill(seckillId, userPhone);

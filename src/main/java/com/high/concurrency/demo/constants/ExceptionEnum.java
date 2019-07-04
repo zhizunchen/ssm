@@ -2,8 +2,9 @@ package com.high.concurrency.demo.constants;
 
 public enum ExceptionEnum {
 
-    ACCOUNT_NOT_EXIT(1000, "参加秒杀的账户不存在" ),
+    ACCOUNT_NOT_EXIT(1000, "参加秒杀的账户不存在"),
     SECKILL_FAILED(2000, "秒杀失败"),
+    GOODS_FAILED(3000, "商品不存在"),
     SUCCESS(0000, "SUCCESS");
 
     private int code;

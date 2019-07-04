@@ -26,6 +26,7 @@ public interface SeckillService {
 
     /**
      * 执行秒杀
-     * */
+     **/
     SeckillExecution executeSeckill(Long seckillId, Long userPhone, String md5);
+
 }
