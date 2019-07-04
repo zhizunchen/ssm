@@ -53,10 +53,12 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public Export exportSeckillUrl(Long seckillId) {
+        // 产品信息先从缓存中读取 不存在从mysql中获取
         Seckill seckill = redisDao.getObj(seckillId);
         if(null == seckill){
             seckill = seckillMapper.queryById(seckillId);
             if(null == seckill){
+                logger.error("查询秒杀产品不存在");
                 return new Export(false, seckillId);
             }else{
                 redisDao.setObj(seckill);

@@ -24,6 +24,7 @@ public class RedisDao {
     public RedisDao(String ip, int port) {
         this.jedisPool = new JedisPool(ip, port);
     }
+
     private RuntimeSchema<Seckill> schema = RuntimeSchema.createFrom(Seckill.class);
 
     public Seckill getObj(Long seckillId){

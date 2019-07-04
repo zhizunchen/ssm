@@ -18,7 +18,7 @@
   </insert>
 
   <!-- queryByIdWithSeckill-->
-  <select id="queryByIdWithSeckill">
+  <select id="queryByIdWithSeckill" resultMap="BaseResultMap">
     select
       sk.seckill_id,
       sk.user_phone,

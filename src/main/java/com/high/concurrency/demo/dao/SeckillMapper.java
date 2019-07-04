@@ -14,7 +14,9 @@ public interface SeckillMapper {
      * */
     int reduceNumber(@Param("seckillId") Long seckillId, @Param("killTime") Date killTime);
 
-    /** 查询单条 */
+    /**
+     *  查询单条
+     * */
     Seckill queryById(Long seckillId);
 
     /* 根据偏移量查询list
